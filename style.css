@@ -1,0 +1,448 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+@font-face {
+  font-family: 'Europa Grotesk SH DemBol';
+  src: url('Fuente/Europa Grotesk SH DemBol.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Europa Grotesk SH DemBol';
+  src: url('Fuente/Europa Grotesk SH DemBol.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Europa Grotesk SH DemBol';
+  src: url('Fuente/Europa Grotesk SH DemBol.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --color-deep-bg: #000000;
+  --color-deep-text: #FFFFFF;
+  --color-deep-gray: #0A0A0A;
+  --color-email-msg: #A0A0A0;
+  /* Premium Grey */
+  --luminous-white: #FFFFFF;
+  --luminous-glow: rgba(255, 255, 255, 0.25);
+  --studio-highlight: rgba(255, 255, 255, 0.12);
+
+  --font-sans: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Europa Grotesk SH DemBol", "Outfit", "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px;
+  /* Offset for sticky header */
+}
+
+body {
+  background-color: var(--color-deep-bg);
+  color: var(--color-deep-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  /* tracking-tight */
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+#ink-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  /* Slightly wider than before for better readability with the new font */
+  line-height: 1.1;
+  margin: 0;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Utilities that Tailwind CDN might miss or are complex */
+.glitch-hover:hover {
+  animation: glitch 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  filter: contrast(150%) grayscale(0%);
+}
+
+.flicker-active {
+  animation: flicker 0.1s ease-in-out 2;
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scanline-active {
+  animation: scanline_anim 0.5s linear forwards;
+}
+
+/* Keyframes */
+@keyframes flicker {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+  }
+}
+
+@keyframes scanline_anim {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  90% {
+    opacity: 0.8;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0)
+  }
+
+  20% {
+    transform: translate(-2px, 2px)
+  }
+
+  40% {
+    transform: translate(-2px, -2px)
+  }
+
+  60% {
+    transform: translate(2px, 2px)
+  }
+
+  80% {
+    transform: translate(2px, -2px)
+  }
+
+  100% {
+    transform: translate(0)
+  }
+}
+
+/* Component specifics */
+#main-header {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: transform 0.4s ease-out !important;
+}
+
+#main-logo-img {
+  margin-top: -68px;
+  transition: margin-top 0.4s ease;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-top: 10px; /* Aligns visually with the Deep logo midline */
+}
+
+.header-btn {
+  position: relative;
+  display: inline-block;
+  width: 132px;
+  height: 40px;
+  flex: 0 0 auto;
+}
+
+.header-btn img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+/* Enlarge specific items visually without altering original layout widths */
+.header-btn.product-btn img,
+.header-btn.lab-btn img,
+.header-btn.dealers-btn img {
+  transform: translate(-50%, -50%) scale(1.65);
+}
+
+.header-btn.car-btn img {
+  transform: translate(-50%, -50%) scale(2);
+}
+
+.header-btn .svg-default {
+  opacity: 1;
+}
+
+.header-btn .svg-hover {
+  opacity: 0;
+}
+
+.header-btn:hover .svg-default {
+  opacity: 0;
+}
+
+.header-btn:hover .svg-hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  #main-logo-img {
+    margin-top: -46px;
+  }
+}
+
+.header-scrolled {
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.nav-link.active-home {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.nav-link.active-product {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tip-btn.active {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+.tip-btn.active span:last-child {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+#cursor-trail-canvas {
+  mix-blend-mode: screen;
+  z-index: 5;
+  opacity: 0.85;
+  /* Increased for better visibility */
+}
+
+.luminous-white {
+  color: #FFFFFF !important;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  letter-spacing: -0.01em;
+}
+
+.studio-lit {
+  filter: brightness(1.05) contrast(1.1);
+  transition: filter 0.5s ease-in-out;
+}
+
+.interactive-illumination {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, filter, box-shadow;
+}
+
+.interactive-illumination:hover {
+  filter: brightness(1.2) contrast(1.05) drop-shadow(0 0 20px rgba(255, 255, 255, 0.15));
+}
+
+.product-hover-effect {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  will-change: transform, filter;
+}
+
+.product-hover-effect:hover {
+  transform: translateY(-12px) scale(1.03) rotate(0.5deg);
+  filter: brightness(1.15) contrast(1.1);
+}
+
+.cart-drawer-open {
+  transform: translateX(0) !important;
+}
+
+.mobile-menu-open {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.backdrop-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Tailwind configuration injection variables for the CDN script */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.bg-deep-bg {
+  background-color: var(--color-deep-bg);
+}
+
+.bg-deep-gray {
+  background-color: var(--color-deep-gray);
+}
+
+.text-deep-text {
+  color: var(--color-deep-text);
+}
+
+.text-deep-bg {
+  color: var(--color-deep-bg);
+}
+
+.border-deep-gray {
+  border-color: var(--color-deep-gray);
+}
+
+.popup-premium {
+  background: linear-gradient(135deg, #050505 0%, #000000 100%) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 255, 255, 0.03);
+}
+
+.popup-premium-light {
+  background: #A1A1A1 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35), 0 0 40px rgba(0, 0, 0, 0.05);
+}
+
+.email-message {
+  color: var(--color-email-msg) !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.email-message-light {
+  color: rgba(0, 0, 0, 0.8) !important;
+  text-shadow: none;
+}
+
+.btn-luminous {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-luminous:hover {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Dealers Section Refinements */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+#dealers .studio-lit {
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(255, 255, 255, 0.02);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle at center, var(--tw-gradient-from), var(--tw-gradient-to));
+}
+
+.mobile-menu-btn-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  height: 40px;
+  margin: 0 auto;
+}
+.mobile-menu-btn-wrap img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  transform-origin: center center;
+}
+.mobile-menu-btn-wrap.product-btn img,
+.mobile-menu-btn-wrap.lab-btn img,
+.mobile-menu-btn-wrap.dealers-btn img {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.mobile-nav-link .svg-default {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.mobile-nav-link .svg-hover {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.mobile-nav-link:hover .svg-default {
+  opacity: 0;
+}
+.mobile-nav-link:hover .svg-hover {
+  opacity: 1;
+}
